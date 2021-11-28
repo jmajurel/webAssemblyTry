@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Demo WebAssembly</title>
+  </head>
+  <body>
+    <textarea id="output" rows="8"></textarea>
+    <button id="laucher">Launch</button>
+    <script src="../compiled/a.out.js"></script>
+    <script>
+      const ouputBox = document.getElementById("output");
+      const launcher = document.getElementById("laucher");
+
+      launcher.addEventListener("click", function (e) {
+        e.preventDefault();
+        let result = Module.ccall("myFunction", null, null, null);
+        console.dir(result);
+        ouputBox.innerText = result;
+      });
+    </script>
+  </body>
+</html>
