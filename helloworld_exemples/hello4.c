@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <emscripten/emscripten.h>
 #include <sys/utsname.h>
-#include <windows.h>
 
 int main() {
 	printf("hello World\n");

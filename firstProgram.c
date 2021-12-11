@@ -10,13 +10,11 @@ int main() {
 extern "C" {
 #endif
 
-EMSCRIPTEN_KEEPALIVE char * myFunction(int argc, char ** argv) {
+EMSCRIPTEN_KEEPALIVE void myFunction(int argc, char ** argv) {
     struct utsname uname_pointer;
 
     uname(&uname_pointer);
 	printf("Hardware on website (from webassembly) %s \n", uname_pointer.machine);
-    char *machine = uname_pointer.machine;
-    return machine;
 }
 
 #ifdef __cplusplus
