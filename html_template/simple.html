@@ -8,26 +8,50 @@
   </head>
   <body>
     <script>
-      const importObject = {
-        module: {},
-        env: {
-          memory: new WebAssembly.Memory({ initial: 256 }),
-        },
-      };
-      const fetchOption = {
+      /*const fetchOption = {
         method: "GET",
         headers: new Headers({ "content-type": "application/wasm" }),
         mode: "no-cors",
       };
-      /*WebAssembly.instantiateStreaming(
-        fetch("http://localhost:5500/compiled/a.out.wasm", fetchOption),
-        importObject
-      ).then((result) => console.log(result));*/
-
-      fetch("http://localhost:5500/helloworld_exemples/hello4.wasm")
+      var asmLibraryArg = {
+        emscripten_memcpy_big: () => HEAPU8.copyWithin(dest, src, src + num),
+        fd_close: _fd_close,
+        fd_seek: _fd_seek,
+        fd_write: _fd_write,
+        setTempRet0: (val) => setTempRet0(val),
+      };
+      var info = {
+        env: asmLibraryArg,
+        wasi_snapshot_preview1: asmLibraryArg,
+      };
+      fetch("http://localhost:5500/compiled/a.out.wasm")
         .then((response) => response.arrayBuffer())
-        .then((bytes) => WebAssembly.instantiate(bytes, importObject))
+        .then((bytes) => WebAssembly.instantiate(bytes, info))
+        .then((result) => {
+          result.instance.exports.myFunction();
+          // Do something with the results!
+        });
+      */
+      /*WebAssembly.instantiateStreaming(
+        fetch("http://localhost:5500/compiled/test_add.wasm"),
+        {}
+      ).then((results) => {
+        // Do something with the results!
+        console.dir(results);
+      });*/
+
+      const importedObj = {
+        env: {
+          printf: console.log,
+        },
+      };
+
+      fetch("http://localhost:5500/compiled/test_print.wasm")
+        .then((response) => response.arrayBuffer())
+        .then((bytes) => WebAssembly.instantiate(bytes, importedObj))
         .then((results) => {
+          console.dir(results);
+          results.instance.exports._Z5printv();
           // Do something with the results!
         });
     </script>
